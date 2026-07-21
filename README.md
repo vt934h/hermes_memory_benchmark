@@ -4,9 +4,25 @@ Since the upgrade to hermes V1 on .79 branch we noticed considerable higher memo
 
 This repository has complete setup including memory sampling tool that demonstrates the issue on three standalone hermes builds.
 
+# Limitations of this setup
+
+Was only tested on osx (Tahoe, 26.5.1). Memory sampler implementation was built pretty fast so the error handling there is not the best.  Essentialy it's running following command (that also could be achieved by calling it from bash): ```ps -axm -o rss,comm | grep -i hermes```
+
+# Versions tested in this benchmark
+
+1. ```hermes-v250829098.0.16```
+2. ```hermes_v250829098.0.13```
+3. ```hermes_RNv0.79.3_7f9a871eefeb2c3852365ee80f0b6733ec12ac3b```
+
+# How memory consumption was sampled
+1. ```-gc-print-stats```  (heapSize value)
+2. ```ps -axm -o rss,comm | grep -i hermes```
+
+Both ways showed very similar memory footprints
+
 # Hardware
 
-While original implementation was intented to run on Android OS, this particular benchmark of standalone version ran on Macbook Pro M3 (arm64) with 36GB of RAM
+Macbook Pro M3 (36GB)
 
 # Prerequisites
 
@@ -14,13 +30,11 @@ While original implementation was intented to run on Android OS, this particular
 2. CMake
 3. Xcode command line tools
 
-# Limitations of this setup
+# How to run this setup
 
-Was only tested on osx (Tahoe, 26.5.1). Memory sampler implementation was built pretty fast so the error handling there is not the best.  Essentialy it's running following command (that also could be achieved by calling it from bash): ```ps -axm -o rss,comm | grep -i hermes```
+Execute ```run.sh```
 
-# Benchmark Setup
-
-Setup is pretty straightforward and consists of following steps (run.sh):
+# Benchmark Stages 
 
 1. Clone all three versions of hermes to their own separate folders (hermes-v250829098.0.16, hermes_v250829098.0.13, hermes_RNv0.79.3_7f9a871eefeb2c3852365ee80f0b6733ec12ac3b)
 2. Build each one with release flag (-DCMAKE_BUILD_TYPE=Release)
@@ -38,7 +52,8 @@ Hermes benchmark:
 ```hermes benchmark.js -gc-print-stats -gc-before-stats```
 
 # Results
-Both V1 .16 and V1 .13 completed benchnark with very similar memory footprint of about 1.8GB
-Non V1 version (rn79) completed benchmark with 950mb
+Both V1 .16 and V1 .13 completed benchnark with very similar memory footprint of about ```1.8GB```
+Non V1 version (rn79) completed benchmark with ```950mb```
 
-Difference in memory consumption is pretty much doubled ...
+![Results Screenshot](csv_results_screenshot.png)
+
