@@ -59,8 +59,10 @@ Non V1 version (rn79) completed benchmark with ```950mb```
 
 # Further findings / Updates
 
-~~I found out that newer version of Hades / Hermes is more dependent on max allowed heap size and is able to operate more efficiently when this is set to limited value. Using following param i was able to get memory usage down to 500+MB from almost 2GB ```-gc-max-heap=512M```. Now the question is how to tell hades/hermes to prioritize usage minimum viable memory instead of relying on fixed max heap value ...
+<del>I found out that newer version of Hades / Hermes is more dependent on max allowed heap size and is able to operate more efficiently when this is set to limited value. Using following param i was able to get memory usage down to 500+MB from almost 2GB ```-gc-max-heap=512M```. Now the question is how to tell hades/hermes to prioritize usage minimum viable memory instead of relying on fixed max heap value ...
 
-Update: specifying large_heap=512MB on .16 cuts execution time by more than 3x ?? Why~~
+Update: specifying large_heap=512MB on .16 cuts execution time by more than 3x ?? Why</del>
 
 Above findings are wrong, apparently OOM error can also come from JS side with execution of main process still continued. This is what happened and I wrongly assumed that benchmark finished. Minimum abount of heap for .16 version to bypass this benchmark was ```1450MB``` that is 52% higher than on ```.79```
+
+```Uncaught RangeError: Requested an array size that fails to allocate: Requested elements = 8367996```
